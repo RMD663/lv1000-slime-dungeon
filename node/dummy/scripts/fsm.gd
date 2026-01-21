@@ -1,2 +1,1 @@
-extends FiniteStateMachine
-class_name EnemyFiniteStateMachine
+extends EnemyFiniteStateMachine

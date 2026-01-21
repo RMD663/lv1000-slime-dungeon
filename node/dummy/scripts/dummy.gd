@@ -15,7 +15,7 @@ var can_be_hurt : bool = true
 var spawn_position : Vector3
 var player_alive : bool = true
 var appearence : Array[int] = [0, 1, 2]
-
+const gravity : float = 100
 @onready var fly_sfx: AudioStreamPlayer = $Effects/FlySfx
 
 @onready var fsm: EnemyFiniteStateMachine = $FSM
@@ -35,15 +35,12 @@ func _ready() -> void:
 	scale = Vector3(random_scale, random_scale, 1)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	rotate_body()
 
-func _physics_process(delta: float) -> void:
-	apply_gravity(delta)
-	move_and_slide()
-
 func apply_gravity(delta : float) -> void:
-	velocity.y += get_gravity().y * delta
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 
 func move(delta : float) -> void:
 	velocity.x = lerp(velocity.x, 0.0, friction * delta)
@@ -60,7 +57,7 @@ func hurt(hurt_data : HurtData) -> void:
 	if can_be_hurt:
 		apply_knockback(hurt_data.direction, hurt_data.knockback)
 		health -= hurt_data.damage
-		fsm.next_state("Hurt")
+		fsm.next_state(fsm.StateID.HURT)
 
 func die() -> void:
 	drop()

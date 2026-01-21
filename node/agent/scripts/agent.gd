@@ -31,10 +31,10 @@ func set_path(target : Vector3) -> void:
 	target.y = body.global_position.y
 	set_target_position(target)
 
-func navigate() -> void:
+func navigate(delta : float) -> void:
 	var current_agent_position: Vector3 = body.global_position
 	var next_path_position: Vector3 = get_next_path_position()
 	var navigation_point_direction : Vector3 =  current_agent_position.direction_to(next_path_position).normalized()
 	var desired_velocity : Vector3 = navigation_point_direction * movement_speed
-	body.velocity.x = lerp(velocity.x, desired_velocity.x * movement_speed, acceleration * get_physics_process_delta_time())
-	body.velocity.z = lerp(velocity.z, desired_velocity.z * movement_speed, acceleration * get_physics_process_delta_time())
+	body.velocity.x = lerp(velocity.x, desired_velocity.x * movement_speed, acceleration * delta)
+	body.velocity.z = lerp(velocity.z, desired_velocity.z * movement_speed, acceleration * delta)

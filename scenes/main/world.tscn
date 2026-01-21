@@ -40,6 +40,7 @@ environment = SubResource("Environment_smv1n")
 
 [node name="Entities" type="Node" parent="." groups=["Entities"]]
 script = ExtResource("1_0aorq")
+max_entities = 500
 
 [node name="Projectiles" type="Node" parent="."]
 script = ExtResource("2_1r2wy")

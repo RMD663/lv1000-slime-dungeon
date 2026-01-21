@@ -1,4 +1,4 @@
-extends State
+extends EnemyState
 class_name EnemyHurtState
 
 @export var hits_sfx : Array[AudioStreamPlayer]
@@ -20,8 +20,10 @@ func on_exit() -> void:
 	animation.animation_finished.disconnect(_animation_finished)
 
 func _animation_finished(_anim_name : String) -> void:
-	change_state("Move")
+	if not enemy.is_on_floor():
+		change_state(fsm.StateID.FALL)
+	change_state(fsm.StateID.MOVE)
 
 func is_dead() -> void:
 	if enemy.health <= 0:
-		change_state("Die")
+		change_state(fsm.StateID.DIE)

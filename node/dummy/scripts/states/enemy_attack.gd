@@ -1,11 +1,8 @@
-extends State
+extends EnemyState
 class_name EnemyAttackState
 
-
 @export var animation : AnimationPlayer
-@onready var hurt: AudioStreamPlayer = $"../../Effects/Hurt"
-
-
+@export var hurt_sfx: AudioStreamPlayer
 
 var attack_animations : Array[String] = ["squash", "attack"]
 
@@ -14,9 +11,11 @@ var attack_animations : Array[String] = ["squash", "attack"]
 
 func on_ready() -> void:
 	if not enemy.player_alive:
-		change_state("Move")
-	hurt.pitch_scale = Helper.random_pitch(0.6, 0.9)
-	hurt.play()
+		change_state(fsm.StateID.MOVE)
+	
+	hurt_sfx.pitch_scale = Helper.random_pitch(0.6, 0.9)
+	hurt_sfx.play()
+	
 	animation.play(attack_animations.pick_random(), 0.0)
 	animation.animation_finished.connect(_animation_finished)
 
@@ -25,8 +24,8 @@ func on_exit() -> void:
 		animation.animation_finished.disconnect(_animation_finished)
 
 func _animation_finished(_anim_name : String) -> void:
-	change_state("Move")
+	change_state(fsm.StateID.MOVE)
 
 func is_dead() -> void:
 	if enemy.health <= 0:
-		change_state("Die")
+		change_state(fsm.StateID.DIE)

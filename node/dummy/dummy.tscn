@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dtujsopmjn6y3"]
+[gd_scene load_steps=31 format=3 uid="uid://dtujsopmjn6y3"]
 
 [ext_resource type="Texture2D" uid="uid://snoik5jqvdyl" path="res://assets/sprites/Basic Monster Sprites/Basic 4x.png" id="1_1i40d"]
 [ext_resource type="Script" uid="uid://qp7ghoahxmfu" path="res://node/dummy/scripts/dummy.gd" id="1_bx2me"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://ddy0sa4pv8fy1" path="res://node/dummy/scripts/states/enemy_hurt.gd" id="5_te06u"]
 [ext_resource type="Script" uid="uid://dmmbh45amlj5a" path="res://node/dummy/scripts/states/enemy_die.gd" id="6_tb0ac"]
 [ext_resource type="Script" uid="uid://5c6wf4skqjk7" path="res://node/hit_box/hit_box.gd" id="9_cwu3v"]
+[ext_resource type="Script" uid="uid://cxuq251sw5egb" path="res://node/dummy/scripts/states/fall.gd" id="10_mydh1"]
 [ext_resource type="AudioStream" uid="uid://cjcka4w2f0ao2" path="res://assets/sfx/hits/3.ogg" id="14_3tq8y"]
 [ext_resource type="AudioStream" uid="uid://chgnotr62ach0" path="res://assets/sfx/hits/1.ogg" id="15_ikoru"]
 [ext_resource type="AudioStream" uid="uid://cr8unvf5uj2kl" path="res://assets/sfx/hits/15.ogg" id="16_mydh1"]
@@ -394,7 +395,7 @@ collision_layer = 4
 script = ExtResource("1_bx2me")
 drops = Array[PackedScene]([ExtResource("2_fhwvu"), ExtResource("3_rssej"), ExtResource("4_d4ot2"), ExtResource("5_ikoru")])
 hurt_data = SubResource("Resource_102f1")
-health = 3
+health = 500
 state_label = NodePath("State")
 body = NodePath("Body")
 sprite = NodePath("Body/Sprite")
@@ -409,6 +410,7 @@ acceleration = 2.0
 
 [node name="FSM" type="Node" parent="."]
 script = ExtResource("3_1rwjt")
+states_map = {}
 
 [node name="Move" type="Node" parent="FSM" node_paths=PackedStringArray("navigation_node", "animation", "path_timer")]
 script = ExtResource("4_vbyms")
@@ -417,19 +419,29 @@ animation = NodePath("../../Animation")
 path_timer = NodePath("PathTimer")
 
 [node name="PathTimer" type="Timer" parent="FSM/Move"]
+one_shot = true
 
-[node name="Attack" type="Node" parent="FSM" node_paths=PackedStringArray("animation")]
+[node name="Fall" type="Node" parent="FSM" node_paths=PackedStringArray("animation")]
+script = ExtResource("10_mydh1")
+animation = NodePath("../../Animation")
+id = 1
+
+[node name="Attack" type="Node" parent="FSM" node_paths=PackedStringArray("animation", "hurt_sfx")]
 script = ExtResource("5_k501i")
 animation = NodePath("../../Animation")
+hurt_sfx = NodePath("../../Effects/Hurt")
+id = 2
 
 [node name="Hurt" type="Node" parent="FSM" node_paths=PackedStringArray("hits_sfx", "animation")]
 script = ExtResource("5_te06u")
 hits_sfx = [NodePath("../../Effects/Hit"), NodePath("../../Effects/Hit2"), NodePath("../../Effects/Hit3"), NodePath("../../Effects/Hit4")]
 animation = NodePath("../../Animation")
+id = 3
 
 [node name="Die" type="Node" parent="FSM" node_paths=PackedStringArray("animation")]
 script = ExtResource("6_tb0ac")
 animation = NodePath("../../Animation")
+id = 4
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
