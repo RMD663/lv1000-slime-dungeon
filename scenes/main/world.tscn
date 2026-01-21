@@ -1,0 +1,65 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxwtyveqf58d4"]
+
+[ext_resource type="Script" uid="uid://cl6vqsrqwk50m" path="res://scenes/main/entities.gd" id="1_0aorq"]
+[ext_resource type="Script" uid="uid://b6lpol1sbwl6p" path="res://scenes/main/projectiles.gd" id="2_1r2wy"]
+[ext_resource type="PackedScene" uid="uid://b2hq4b2c2vnxd" path="res://node/camera/camera.tscn" id="2_526id"]
+[ext_resource type="PackedScene" uid="uid://drefrbk7lyn8a" path="res://node/player/player.tscn" id="2_iubku"]
+[ext_resource type="Script" uid="uid://bh1n3epshshgu" path="res://scenes/main/level_manager.gd" id="3_y2s00"]
+[ext_resource type="PackedScene" uid="uid://cn3aa1xl84fvb" path="res://scenes/cave/cave.tscn" id="4_526id"]
+[ext_resource type="PackedScene" uid="uid://bfxmaygphle70" path="res://node/game_ui/game_ui.tscn" id="6_yshnf"]
+[ext_resource type="Script" uid="uid://c81rsdi8cbtqw" path="res://scenes/main/world_border.gd" id="8_7te0o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1r2wy"]
+sky_top_color = Color(6.256998e-07, 0.18146649, 0.50602365, 1)
+sky_horizon_color = Color(0.14305013, 0.1879166, 0.2840559, 1)
+ground_bottom_color = Color(0.001999998, 0, 0.06, 1)
+ground_horizon_color = Color(0.14305013, 0.1879166, 0.2840559, 1)
+energy_multiplier = 1.1
+
+[sub_resource type="Sky" id="Sky_7te0o"]
+sky_material = SubResource("ProceduralSkyMaterial_1r2wy")
+
+[sub_resource type="Environment" id="Environment_smv1n"]
+background_mode = 2
+sky = SubResource("Sky_7te0o")
+glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1r2wy"]
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, -1.4145303e-07, 1.0277164e-07, 0, 0.58778524, 0.809017, -1.7484555e-07, -0.809017, 0.58778524, 0, 0, 0)
+light_color = Color(1.216, 1.216, 1.216, 1)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_smv1n")
+
+[node name="GameUI" parent="." instance=ExtResource("6_yshnf")]
+
+[node name="Entities" type="Node" parent="." groups=["Entities"]]
+script = ExtResource("1_0aorq")
+
+[node name="Projectiles" type="Node" parent="."]
+script = ExtResource("2_1r2wy")
+
+[node name="Camera" parent="." instance=ExtResource("2_526id")]
+transform = Transform3D(1, 0, 0, 0, 0.89566517, 0.44472897, 0, -0.44472897, 0.89566517, 0, 3.3088222, 5.58944)
+
+[node name="Level" type="Node" parent="."]
+script = ExtResource("3_y2s00")
+main_scene = ExtResource("4_526id")
+
+[node name="Player" parent="." instance=ExtResource("2_iubku")]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.255477, -5.9576693)
+
+[node name="WorldBorder" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.029234, 0)
+collision_layer = 31
+collision_mask = 31
+script = ExtResource("8_7te0o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBorder"]
+shape = SubResource("WorldBoundaryShape3D_1r2wy")

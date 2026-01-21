@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://17582e202v1y"]
+
+[ext_resource type="Script" uid="uid://csobmt7jtrpqa" path="res://node/change_zone/change_zone.gd" id="1_yj46o"]
+
+[node name="ChangeZone" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_yj46o")

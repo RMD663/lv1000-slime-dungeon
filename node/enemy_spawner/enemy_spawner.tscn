@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3ijk2ya2p3r6"]
+
+[ext_resource type="Script" uid="uid://eyn5v1mno1sd" path="res://node/enemy_spawner/enemy_spawner.gd" id="1_u7wof"]
+[ext_resource type="PackedScene" uid="uid://dtujsopmjn6y3" path="res://node/dummy/dummy.tscn" id="2_xvx3n"]
+
+[node name="EnemySpawner" type="Marker3D" node_paths=PackedStringArray("timer", "increment_timer")]
+script = ExtResource("1_u7wof")
+enemies = Array[PackedScene]([ExtResource("2_xvx3n")])
+timer = NodePath("Timer")
+increment_timer = NodePath("IncrementTimer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="IncrementTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true

@@ -1,0 +1,185 @@
+[gd_scene load_steps=17 format=3 uid="uid://cn3aa1xl84fvb"]
+
+[ext_resource type="FontFile" uid="uid://cnqhwcws25ddt" path="res://assets/fonts/Silver.ttf" id="1_cmxka"]
+[ext_resource type="Script" uid="uid://cdo5v8gj3a2kv" path="res://scenes/cave/level.gd" id="1_drg44"]
+[ext_resource type="Texture2D" uid="uid://bckjpc0qldpwx" path="res://assets/textures/map/Dark/texture_04.png" id="1_egv8d"]
+[ext_resource type="PackedScene" uid="uid://bpy6tg264tlp7" path="res://node/spawn/player/player_spawn.tscn" id="1_pvhme"]
+[ext_resource type="Texture2D" uid="uid://snoik5jqvdyl" path="res://assets/sprites/Basic Monster Sprites/Basic 4x.png" id="5_drg44"]
+[ext_resource type="PackedScene" uid="uid://17582e202v1y" path="res://node/change_zone/change_zone.tscn" id="6_14vpl"]
+[ext_resource type="PackedScene" uid="uid://bbbjouv37k03l" path="res://scenes/arena/arena.tscn" id="7_kkerk"]
+[ext_resource type="Script" uid="uid://d2opeyqqdmmep" path="res://scenes/cave/quit.gd" id="8_kkerk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ftedc"]
+sky_top_color = Color(0.133, 0.15675001, 0.19, 1)
+sky_horizon_color = Color(0.38922313, 0.29135424, 0.50107336, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.3783226, 0.28435722, 0.4837163, 1)
+
+[sub_resource type="Sky" id="Sky_pvhme"]
+sky_material = SubResource("ProceduralSkyMaterial_ftedc")
+
+[sub_resource type="Environment" id="Environment_egv8d"]
+background_mode = 2
+sky = SubResource("Sky_pvhme")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmxka"]
+albedo_texture = ExtResource("1_egv8d")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egv8d"]
+shading_mode = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pvhme"]
+material = SubResource("StandardMaterial3D_egv8d")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qphu"]
+size = Vector3(2.0913086, 5.2210693, 10.543213)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_14vpl"]
+size = Vector3(2.9273071, 5.0717773, 2.1144867)
+
+[node name="Cave" type="Node3D" node_paths=PackedStringArray("camera_marker")]
+script = ExtResource("1_drg44")
+camera_marker = NodePath("CameraMarker")
+camera_offset = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_egv8d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.7325429, -0.30904084, 0.6065268, 0, 0.8910065, 0.45399052, -0.6807209, 0.3325675, -0.6527005, 0, 0, 0)
+light_color = Color(0.9499268, 1.0745044, 1.697393, 1)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("1_pvhme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9769139, -1.0273494)
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2883377, 2.4105225, -0.03796327)
+visible = false
+use_collision = true
+size = Vector3(16.72676, 5.821045, 0.70054626)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3465729, 1.0577888, -4.345392)
+use_collision = true
+size = Vector3(5.7415466, 6.400818, 2.9028015)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28061104, 5.321104, -1.9852161)
+use_collision = true
+size = Vector3(24.686413, 2.0668335, 7.6231537)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.682949, -0.5562916, -2.9535332)
+use_collision = true
+size = Vector3(18.623608, 1.5540886, 5.6865196)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.89246, 2.3818665, -4.345392)
+use_collision = true
+size = Vector3(7.424694, 4.86129, 2.9028015)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4710855, 0.9797659, -5.3757954)
+use_collision = true
+size = Vector3(4.498802, 2.0570889, 4.963608)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51083, 2.7555938, -3.9853497)
+use_collision = true
+size = Vector3(4.498802, 5.6087446, 7.744499)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7018108, 4.4637594, -13.3849)
+use_collision = true
+size = Vector3(20.924084, 9.025076, 7.744499)
+material = SubResource("StandardMaterial3D_cmxka")
+
+[node name="Quit" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5421824, 2.8551526, -3.8048255)
+modulate = Color(0.9935592, 0.9773926, 0, 1)
+text = "QUIT"
+font = ExtResource("1_cmxka")
+font_size = 200
+
+[node name="Dungeon" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.364949, 2.8551526, -2.8653574)
+modulate = Color(0.9882353, 0.9882353, 0.9882353, 1)
+text = "I REICARNATED AS A SLIME THEN I SPENT 100
+YEARS IN THIS LV 1000 DUNGEON
+THEN I BECAME THE MASTER SLIME "
+font_size = 50
+
+[node name="Exit" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.1284194, 0, 0, 0, 0.018045714, -3.1280527, 0, 0.99983716, 0.05645714, 1.9231906, 1.8562547, -5.541755)
+mesh = SubResource("PlaneMesh_pvhme")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.9995645, -0.017230723, 0.023956139, 0, 0.8118186, 0.58390975, -0.029509226, 0.5836554, -0.8114651, 2.668919, 4.3138647, -7.507071)
+light_energy = 0.6
+spot_range = 6.4005685
+spot_attenuation = -1.89
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.35154563, -0.01723072, 0.9360122, 0.5415519, 0.8118186, 0.21833952, -0.76363426, 0.5836555, -0.27605996, 14.915667, 0.2368221, -1.8553965)
+light_color = Color(1, 0.9524881, 0.619101, 1)
+light_energy = 0.6
+spot_range = 9.411645
+spot_attenuation = -2.92
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(0.8152657, -0.40334305, 0.41551936, 0.4618054, 0.885774, -0.0462628, -0.34939653, 0.2296056, 0.9084072, 4.801958, 1.0402966, 6.649299)
+light_energy = 8.588
+spot_range = 746.386
+
+[node name="CameraMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.98433745, 0.17629452, 0, -0.17629452, 0.98433745, 0, 2.7844706, 2.5922492)
+
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2446356, 0.53523564, -2.8920548)
+sorting_offset = -5.0
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("5_drg44")
+hframes = 5
+vframes = 3
+frame = 9
+
+[node name="Sprite2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.549636, 0.53523564, -2.8920548)
+sorting_offset = -5.0
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("5_drg44")
+hframes = 5
+vframes = 3
+frame = 2
+
+[node name="ChangeZone" parent="." instance=ExtResource("6_14vpl")]
+transform = Transform3D(0.83931637, 0, -0.54364324, 0, 1, 0, 0.54364324, 0, 0.83931637, 8.413305, 0.9840429, -2.9022896)
+scene_to = ExtResource("7_kkerk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ChangeZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5456543, 1.3308845, -1.0550537)
+shape = SubResource("BoxShape3D_6qphu")
+
+[node name="QuitArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9161432, 0, -7.1555243)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_kkerk")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="QuitArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20932007, 2.0358887, 0.48193312)
+shape = SubResource("BoxShape3D_14vpl")

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="EffectData" load_steps=2 format=3 uid="uid://dhvvj4m2plnrl"]
+
+[ext_resource type="Script" uid="uid://ssf4alqwo7pk" path="res://resources/effect_data/effect_data.gd" id="1_8pwav"]
+
+[resource]
+script = ExtResource("1_8pwav")

@@ -1,0 +1,12 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://c4etmhfjv0sin"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7pjy"]
+albedo_color = Color(0.62396955, 1.3902427, 0.00010242632, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.2
+
+[resource]
+material = SubResource("StandardMaterial3D_b7pjy")
+radius = 0.03
+height = 0.06

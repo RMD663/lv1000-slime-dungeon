@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvp34usted8f3"]
+
+[ext_resource type="Script" uid="uid://c16oa2stuan4h" path="res://node/pick_up/pick_up_area.gd" id="1_e8k04"]
+[ext_resource type="Script" uid="uid://ssf4alqwo7pk" path="res://resources/effect_data/effect_data.gd" id="2_wakvo"]
+[ext_resource type="Material" uid="uid://cr658lb2llmcg" path="res://resources/materials/pick_up_material/pick_up_material.tres" id="3_5wca3"]
+[ext_resource type="AudioStream" uid="uid://cryy3tvtogmp1" path="res://assets/sfx/defeat/impactsplat08.mp3.ogg" id="4_wakvo"]
+
+[sub_resource type="Resource" id="Resource_dqj3j"]
+script = ExtResource("2_wakvo")
+health = 2
+scale = Vector3(0.8, 0.8, 1)
+speed = 10.0
+duration = 4.0
+screen_shake = 0.1
+screen_shake_duration = 0.2
+screen_freeze_duration = 0.2
+metadata/_custom_type_script = "uid://ssf4alqwo7pk"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dqj3j"]
+albedo_color = Color(3.013768, 0.9034732, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fybkx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fybkx"]
+material = ExtResource("3_5wca3")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fybkx"]
+radius = 0.20416617
+
+[node name="Small" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="PickUpArea" type="Area3D" parent="." node_paths=PackedStringArray("sfx")]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_e8k04")
+target = "Player"
+effect_data = SubResource("Resource_dqj3j")
+material = SubResource("StandardMaterial3D_dqj3j")
+sfx = NodePath("../SFX/Effect")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="PickUpArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5439497, 0)
+shape = SubResource("BoxShape3D_fybkx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_fybkx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_fybkx")
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Effect" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_wakvo")
