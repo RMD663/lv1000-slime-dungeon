@@ -78,8 +78,8 @@ func drop() -> void:
 	var rand_chance : int = randi_range(0, 5) 
 	if rand_chance == drop_chance:
 		var drop_node = drops.pick_random().instantiate()
-		drop_node.global_position = global_position
 		Helper.get_enemy_spanwer().add_child(drop_node)
+		drop_node.global_position = global_position
 
 func _player_is_dead() -> void:
 	player_alive = false

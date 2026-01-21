@@ -5,6 +5,9 @@ class_name Entities
 
 var enemies : Array[Enemy]
 var enemie_counter : int = 0
+var acumulated_delta : float = 0.0
+var count : float = 0.0
+var timestep : float = Engine.max_fps
 
 @export var enemies_per_frame : int = 25
 
@@ -24,10 +27,15 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	update_enemies()
+	acumulated_delta += delta
+	count = int(acumulated_delta / timestep)
+	acumulated_delta -= count * timestep
+	update_enemies(delta)
 
-func update_enemies() -> void:
+func update_enemies(delta : float) -> void:
 	var total : int = enemies.size()
+	
+	
 	
 	for i in range(total):
 		if total == 0:
@@ -37,17 +45,19 @@ func update_enemies() -> void:
 			return
 		var enemy : Enemy = enemies[enemie_counter]
 		if is_instance_valid(enemy):
+			enemy.fsm._physics_process(delta)
 			enemy.move_and_slide()
 			enemie_counter += 1
 		else:
-			enemies.erase(enemie_counter)
+			enemies.remove_at(enemie_counter)
+
 func add_entity(entity : CharacterBody3D) -> void:
 	if not game_ended:
 		if entity_ammount < max_entities and entity_ammount < current_enemies:
 			entity_ammount += 1
 			add_child(entity)
 			entity.spawn()
-			if entity.is_in_group("Enemy"):
+			if entity is Enemy:
 				enemies.append(entity)
 
 
@@ -70,4 +80,5 @@ func _reset() -> void:
 			enemy._die()
 	current_enemies = total_enemies
 	entity_ammount = 0
+	enemies.clear()
 	
