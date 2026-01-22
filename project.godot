@@ -21,7 +21,6 @@ Helper="*res://global/Helper.gd"
 
 [display]
 
-window/size/mode=4
 window/stretch/mode="canvas_items"
 
 [dotnet]

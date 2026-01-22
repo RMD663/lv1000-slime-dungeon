@@ -79,7 +79,6 @@ func apply_effect(data : EffectData) -> void:
 		if current_state != "Idle" or current_state != "Move" and not current_state == "Die":
 			fsm.next_state("Idle")
 		health += data.health
-		hit_box.damage += data.damage
 		scale += data.scale
 		scale = scale.clamp(Vector3(0.1, 0.1, 1), Vector3(10, 10, 1))
 		speed += data.speed
@@ -101,7 +100,6 @@ func _reset() -> void:
 	direction = Vector2.ZERO
 	velocity = Vector3.ZERO
 	health = player_data.health
-	hit_box.damage = player_data.damage
 	can_be_hurt = true
 	sprite.modulate = Color.WHITE
 	sprite.rotation =  Vector3.ZERO
@@ -114,7 +112,6 @@ func _reset() -> void:
 func _pickup_timeout() -> void:
 	has_effect_active = false
 	health = player_data.health
-	hit_box.damage = player_data.damage
 	speed = player_data.speed
 	knockback = player_data.knockback
 	scale = player_data.scale

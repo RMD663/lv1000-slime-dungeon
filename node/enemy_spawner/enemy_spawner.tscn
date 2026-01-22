@@ -10,7 +10,7 @@ timer = NodePath("Timer")
 increment_timer = NodePath("IncrementTimer")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.1
 
 [node name="IncrementTimer" type="Timer" parent="."]
 wait_time = 5.0

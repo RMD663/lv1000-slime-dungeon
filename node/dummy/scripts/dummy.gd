@@ -4,6 +4,7 @@ class_name Enemy
 
 @export var drops : Array[PackedScene]
 
+@export var enemy_data : EnemyData
 @export var hurt_data : HurtData
 @export var health : int = 5
 @export var friction : float = 5.0
@@ -11,6 +12,7 @@ class_name Enemy
 @export var body : Node3D
 @export var sprite : Sprite3D
 @export var knockback : float = 5.0
+
 var can_be_hurt : bool = true
 var spawn_position : Vector3
 var player_alive : bool = true
@@ -37,13 +39,17 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	rotate_body()
-
+	body.global_position.x = lerpf(body.global_position.x, self.global_position.x, 0.01 * delta)
+	body.global_position.z = lerpf(body.global_position.z, self.global_position.z, 0.01 * delta)
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
-	move_and_slide()
+	#move_and_slide()
 
 func apply_gravity(delta : float) -> void:
-	velocity.y += get_gravity().y * delta
+	if not is_on_floor():
+		velocity.y += get_gravity().y * delta
+	else:
+		velocity.y = 0
 
 func move(delta : float) -> void:
 	velocity.x = lerp(velocity.x, 0.0, friction * delta)
@@ -81,8 +87,8 @@ func drop() -> void:
 	var rand_chance : int = randi_range(0, 5) 
 	if rand_chance == drop_chance:
 		var drop_node = drops.pick_random().instantiate()
-		drop_node.global_position = global_position
 		Helper.get_enemy_spanwer().add_child(drop_node)
+		drop_node.global_position = global_position
 
 func _player_is_dead() -> void:
 	player_alive = false

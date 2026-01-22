@@ -20,7 +20,6 @@ func spawn_random() -> void:
 	enemy.spawn_position = self.global_position
 	entities_node.add_entity(enemy)
 
-
 func _timeout() -> void:
 	spawn_random()
 	timer.start()
@@ -32,6 +31,6 @@ func _increment_timeout() -> void:
 	increment_timer.start()
 
 func _reset() -> void:
-	timer.wait_time = 2
+	timer.wait_time = 0.1
 	timer.start()
 	increment_timer.start()

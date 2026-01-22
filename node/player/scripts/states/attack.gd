@@ -8,6 +8,7 @@ class_name PlayerAttackState
 @onready var hit_particles: GPUParticles3D = $"../../Body/HitParticles"
 
 func on_ready() -> void:
+	$"../../ShapeCast3D"._hit()
 	hit_particles.emitting = true
 	animation.animation_finished.connect(_animation_finished)
 	attack_sfx.pitch_scale = Helper.random_pitch(1.3, 1.7)

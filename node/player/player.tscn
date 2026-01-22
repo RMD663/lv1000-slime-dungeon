@@ -10,13 +10,13 @@
 [ext_resource type="Script" uid="uid://b8r2vj8f5ppf3" path="res://node/player/scripts/states/fall.gd" id="6_4hvkq"]
 [ext_resource type="Script" uid="uid://chvjrl6u0dg4t" path="res://node/player/scripts/states/attack.gd" id="6_bj5vy"]
 [ext_resource type="Script" uid="uid://df84k7l6ho5tr" path="res://node/player/scripts/states/hurt.gd" id="7_pklsa"]
-[ext_resource type="PackedScene" uid="uid://33arawf1m6jr" path="res://node/hit_box/hit_box.tscn" id="8_hhd2b"]
 [ext_resource type="Script" uid="uid://cbca5x8c0a5e0" path="res://node/player/scripts/states/die.gd" id="8_pq717"]
 [ext_resource type="AudioStream" uid="uid://cid25hekpnufs" path="res://assets/sfx/player/slime_step.ogg" id="13_x26sy"]
 [ext_resource type="AudioStream" uid="uid://2j7qsl5qg4k0" path="res://assets/sfx/player/qubodupSlimeMonster-attack1.ogg" id="14_vbmom"]
 [ext_resource type="AudioStream" uid="uid://b63pjgkkflxj6" path="res://assets/sfx/impact/qubodupImpactMeat02.ogg" id="15_q4ipv"]
 [ext_resource type="AudioStream" uid="uid://dh8nxf0px8tbx" path="res://assets/sfx/defeat/impactsplat01.mp3.ogg" id="16_qhaou"]
 [ext_resource type="AudioStream" uid="uid://1mh31kt8leyv" path="res://assets/sfx/explosion/explodemini.wav" id="17_4r6ui"]
+[ext_resource type="Script" uid="uid://dqm8op3v7wh0y" path="res://node/player/scripts/hit_area.gd" id="17_h8ggq"]
 
 [sub_resource type="Resource" id="Resource_x26sy"]
 script = ExtResource("2_b7pjy")
@@ -24,7 +24,7 @@ metadata/_custom_type_script = "uid://bg8kgg7ruw5n"
 
 [sub_resource type="Resource" id="Resource_b7pjy"]
 script = ExtResource("2_5bub0")
-health = 3
+health = 5000
 metadata/_custom_type_script = "uid://jggp1momv5mp"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_knqg0"]
@@ -71,46 +71,34 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Body/HitBox:monitoring")
+tracks/3/path = NodePath("Body/Sprite:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Body/Sprite:modulate")
+tracks/4/path = NodePath("Effects/MoveSfx:playing")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+"update": 1,
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Effects/MoveSfx:playing")
+tracks/5/path = NodePath("Effects/AttackSfx:playing")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Effects/AttackSfx:playing")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -160,22 +148,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Body/HitBox:monitoring")
+tracks/3/path = NodePath("Effects/AttackSfx:playing")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.25206393),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Effects/AttackSfx:playing")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.195),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -222,18 +198,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0, 6.3529983), Vector3(0, 0, 19.949114)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Body/HitBox:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_bj5vy"]
 resource_name = "fall"
@@ -260,18 +224,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0.014164612, 0), Vector3(0, 0.297, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Body/HitBox:monitoring")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_pklsa"]
@@ -325,18 +277,6 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Body/HitBox:monitoring")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_hycg2"]
@@ -411,22 +351,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Body/HitBox:monitoring")
+tracks/2/path = NodePath("Effects/MoveSfx:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Effects/MoveSfx:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -443,9 +371,6 @@ _data = {
 &"idle": SubResource("Animation_hycg2"),
 &"move": SubResource("Animation_4hvkq")
 }
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hhd2b"]
-size = Vector3(1.4053955, 1, 1.1025391)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4r6ui"]
 emission_shape = 1
@@ -511,11 +436,14 @@ material = SubResource("StandardMaterial3D_p2yli")
 top_radius = 0.1
 bottom_radius = 0.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_4r6ui"]
+size = Vector3(1.5, 1.5, 1.5)
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_box", "sprite", "pick_effect_timer", "body") groups=["Player"]]
 collision_layer = 130
 collision_mask = 131
 script = ExtResource("1_wego0")
-hit_box = NodePath("Body/HitBox")
+hit_box = NodePath("")
 sprite = NodePath("Body/Sprite")
 hurt_data = SubResource("Resource_x26sy")
 player_data = SubResource("Resource_b7pjy")
@@ -574,17 +502,6 @@ hframes = 5
 vframes = 3
 frame = 14
 
-[node name="HitBox" parent="Body" instance=ExtResource("8_hhd2b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7391533, 0.13944775, 0)
-collision_layer = 0
-collision_mask = 4
-monitoring = false
-target = "Enemy"
-
-[node name="CollisionShape" type="CollisionShape3D" parent="Body/HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03302002, 0, -0.05126953)
-shape = SubResource("BoxShape3D_hhd2b")
-
 [node name="WalkParticles" type="GPUParticles3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39886475, -0.2326724, 0)
 emitting = false
@@ -641,3 +558,12 @@ volume_db = -8.0
 stream = ExtResource("17_4r6ui")
 volume_db = -8.0
 pitch_scale = 1.5
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="." node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05257532, 1.3227842, 0)
+shape = SubResource("BoxShape3D_4r6ui")
+margin = 0.5
+max_results = 100
+collision_mask = 4
+script = ExtResource("17_h8ggq")
+player = NodePath("..")
