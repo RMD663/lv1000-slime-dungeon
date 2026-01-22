@@ -48,7 +48,7 @@ func _play_fade_out() -> void:
 
 func _play_reset() -> void:
 	if not first_start:
-		enemies_left.text = "ENEMIES LEFT\n" + str(250)
+		enemies_left.text = "ENEMIES LEFT\n" + str(500)
 		effects.play("reset")
 		combo_label.show()
 		enemies_left.show()
