@@ -16,7 +16,7 @@ func _ready() -> void:
 	quit.pressed.connect(_quit_pressed)
 
 func _try_again_pressed() -> void:
-	get_tree().quit()
+	get_tree().change_scene_to_packed(WORLD)
 
 func _quit_pressed() -> void:
 	get_tree().quit()

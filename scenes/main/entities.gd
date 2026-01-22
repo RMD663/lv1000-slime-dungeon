@@ -1,7 +1,7 @@
 extends Node
 class_name Entities
 
-@export var max_entities : int = 500
+@export var max_entities : int = 200
 
 var splice_group_size : int = 50
 var enemies : Array[Enemy] = []
@@ -14,6 +14,7 @@ var game_ended : bool = false
 var current_enemies : int = 0
 const total_enemies : int = 500
 
+
 func _ready() -> void:
 	current_enemies = total_enemies
 	Helper.reset.connect(_reset)
@@ -24,11 +25,11 @@ func _physics_process(delta: float) -> void:
 	process_enemy_physics()
 
 func process_enemy_physics() -> void:
-	#if enemies array is empty not execute update
 	var total : int = enemies.size()
-	print(total)
+	
 	if total <= 0:
 		return
+	
 	var total_groups : float = float(total) / float(splice_group_size)
 	if total_groups < 1.0:
 		total_groups = 1.0
@@ -38,10 +39,8 @@ func process_enemy_physics() -> void:
 	for i in range(iterations):
 		if _counter >= total:
 			_counter = 0
-		if _counter >= enemies.size():
-			_counter = 0
 			return
-
+	
 		var enemy : Enemy = enemies[_counter]
 		
 		if is_instance_valid(enemy):

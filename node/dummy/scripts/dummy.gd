@@ -41,9 +41,10 @@ func _process(delta: float) -> void:
 	rotate_body()
 	body.global_position.x = lerpf(body.global_position.x, self.global_position.x, 0.01 * delta)
 	body.global_position.z = lerpf(body.global_position.z, self.global_position.z, 0.01 * delta)
+
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
-	#move_and_slide()
+
 
 func apply_gravity(delta : float) -> void:
 	if not is_on_floor():
@@ -84,7 +85,7 @@ func fly_away() -> void:
 
 func drop() -> void:
 	var drop_chance : int = 1
-	var rand_chance : int = randi_range(0, 5) 
+	var rand_chance : int = randi_range(0, 10) 
 	if rand_chance == drop_chance:
 		var drop_node = drops.pick_random().instantiate()
 		Helper.get_enemy_spanwer().add_child(drop_node)

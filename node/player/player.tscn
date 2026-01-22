@@ -16,7 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://b63pjgkkflxj6" path="res://assets/sfx/impact/qubodupImpactMeat02.ogg" id="15_q4ipv"]
 [ext_resource type="AudioStream" uid="uid://dh8nxf0px8tbx" path="res://assets/sfx/defeat/impactsplat01.mp3.ogg" id="16_qhaou"]
 [ext_resource type="AudioStream" uid="uid://1mh31kt8leyv" path="res://assets/sfx/explosion/explodemini.wav" id="17_4r6ui"]
-[ext_resource type="Script" uid="uid://dqm8op3v7wh0y" path="res://node/player/scripts/hit_area.gd" id="17_h8ggq"]
+[ext_resource type="PackedScene" uid="uid://33arawf1m6jr" path="res://node/hit_box/hit_box.tscn" id="17_h8ggq"]
 
 [sub_resource type="Resource" id="Resource_x26sy"]
 script = ExtResource("2_b7pjy")
@@ -104,6 +104,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitBox:monitoring")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_hhd2b"]
 resource_name = "attack"
@@ -156,6 +168,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HitBox:monitoring")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.20037545, 0.29877412),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_pq717"]
@@ -437,13 +461,12 @@ top_radius = 0.1
 bottom_radius = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r6ui"]
-size = Vector3(1.5, 1.5, 1.5)
+size = Vector3(1.7935867, 1.5371094, 0.7887268)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_box", "sprite", "pick_effect_timer", "body") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("sprite", "pick_effect_timer", "body") groups=["Player"]]
 collision_layer = 130
 collision_mask = 131
 script = ExtResource("1_wego0")
-hit_box = NodePath("")
 sprite = NodePath("Body/Sprite")
 hurt_data = SubResource("Resource_x26sy")
 player_data = SubResource("Resource_b7pjy")
@@ -475,9 +498,11 @@ script = ExtResource("6_4hvkq")
 animation = NodePath("../../Animation")
 fall_sfx = NodePath("../../Effects/FallSfx")
 
-[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animation")]
+[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animation", "attack_sfx", "hit_particles")]
 script = ExtResource("6_bj5vy")
 animation = NodePath("../../Animation")
+attack_sfx = NodePath("../../Effects/AttackSfx")
+hit_particles = NodePath("../../Body/HitParticles")
 
 [node name="Hurt" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animation")]
 script = ExtResource("7_pklsa")
@@ -510,7 +535,7 @@ process_material = SubResource("ParticleProcessMaterial_4r6ui")
 draw_pass_1 = SubResource("SphereMesh_h8ggq")
 
 [node name="HitParticles" type="GPUParticles3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9211997, 0.1620509, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025770426, 0.1620509, 0)
 emitting = false
 lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_b7pjy")
@@ -559,11 +584,13 @@ stream = ExtResource("17_4r6ui")
 volume_db = -8.0
 pitch_scale = 1.5
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="." node_paths=PackedStringArray("player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05257532, 1.3227842, 0)
-shape = SubResource("BoxShape3D_4r6ui")
-margin = 0.5
-max_results = 100
+[node name="HitBox" parent="." instance=ExtResource("17_h8ggq")]
+collision_layer = 0
 collision_mask = 4
-script = ExtResource("17_h8ggq")
-player = NodePath("..")
+monitoring = false
+target = "Enemy"
+damage = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020122528, 0.2685547, -0.0073394775)
+shape = SubResource("BoxShape3D_4r6ui")

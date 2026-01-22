@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dtujsopmjn6y3"]
+[gd_scene load_steps=32 format=3 uid="uid://dtujsopmjn6y3"]
 
 [ext_resource type="Texture2D" uid="uid://snoik5jqvdyl" path="res://assets/sprites/Basic Monster Sprites/Basic 4x.png" id="1_1i40d"]
 [ext_resource type="Script" uid="uid://qp7ghoahxmfu" path="res://node/dummy/scripts/dummy.gd" id="1_bx2me"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d2turyrte78d3" path="res://node/pick_up/omega.tscn" id="5_ikoru"]
 [ext_resource type="Script" uid="uid://b1rrm7ofo3xt2" path="res://node/dummy/scripts/states/enemy_attack.gd" id="5_k501i"]
 [ext_resource type="Script" uid="uid://ddy0sa4pv8fy1" path="res://node/dummy/scripts/states/enemy_hurt.gd" id="5_te06u"]
+[ext_resource type="Script" uid="uid://ci74c0srl6kdp" path="res://resources/enemy_data/enemy_data.gd" id="6_mydh1"]
 [ext_resource type="Script" uid="uid://dmmbh45amlj5a" path="res://node/dummy/scripts/states/enemy_die.gd" id="6_tb0ac"]
 [ext_resource type="Script" uid="uid://5c6wf4skqjk7" path="res://node/hit_box/hit_box.gd" id="9_cwu3v"]
 [ext_resource type="AudioStream" uid="uid://cjcka4w2f0ao2" path="res://assets/sfx/hits/3.ogg" id="14_3tq8y"]
@@ -19,6 +20,10 @@
 [ext_resource type="AudioStream" uid="uid://cr8unvf5uj2kl" path="res://assets/sfx/hits/15.ogg" id="16_mydh1"]
 [ext_resource type="AudioStream" uid="uid://b02nwj1e7xb73" path="res://assets/sfx/hits/18.ogg" id="17_7wkos"]
 [ext_resource type="AudioStream" uid="uid://dxi42cf0wo60j" path="res://assets/sfx/hits/7.ogg" id="18_iryw1"]
+
+[sub_resource type="Resource" id="Resource_7wkos"]
+script = ExtResource("6_mydh1")
+metadata/_custom_type_script = "uid://ci74c0srl6kdp"
 
 [sub_resource type="Resource" id="Resource_102f1"]
 script = ExtResource("2_n2e0v")
@@ -393,6 +398,7 @@ size = Vector3(0.6856079, 1.612854, 0.8442383)
 collision_layer = 4
 script = ExtResource("1_bx2me")
 drops = Array[PackedScene]([ExtResource("2_fhwvu"), ExtResource("3_rssej"), ExtResource("4_d4ot2"), ExtResource("5_ikoru")])
+enemy_data = SubResource("Resource_7wkos")
 hurt_data = SubResource("Resource_102f1")
 health = 3
 state_label = NodePath("State")
@@ -404,7 +410,7 @@ shape = SubResource("BoxShape3D_1i40d")
 
 [node name="Agent" parent="." instance=ExtResource("3_glmyy")]
 avoidance_enabled = true
-movement_speed = 5.0
+movement_speed = 8.0
 acceleration = 2.0
 
 [node name="FSM" type="Node" parent="."]

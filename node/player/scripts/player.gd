@@ -83,7 +83,7 @@ func apply_effect(data : EffectData) -> void:
 		scale = scale.clamp(Vector3(0.1, 0.1, 1), Vector3(10, 10, 1))
 		speed += data.speed
 		pick_effect_timer.start(data.duration)
-		global_position.y += data.scale.y / 3
+		global_position.y += abs(data.scale.y) / 3
 
 
 func player_is_moving() -> bool:

@@ -13,7 +13,7 @@ func _ready() -> void:
 	timer.timeout.connect(_timeout)
 	timer.start()
 	increment_timer.start()
-	entities_node = get_tree().get_first_node_in_group("Entities")
+	entities_node = Helper.get_enemy_spanwer()
 
 func spawn_random() -> void:
 	var enemy : Enemy = enemies.pick_random().instantiate()
@@ -25,12 +25,12 @@ func _timeout() -> void:
 	timer.start()
 
 func _increment_timeout() -> void:
-	if timer.wait_time > 0.2:
-		print("Time Reset: ", timer.wait_time)
-		timer.wait_time -= 0.1
+	if timer.wait_time > 0.5:
+		timer.wait_time -= 0.3
+	
 	increment_timer.start()
 
 func _reset() -> void:
-	timer.wait_time = 0.1
+	timer.wait_time = 3.0
 	timer.start()
 	increment_timer.start()

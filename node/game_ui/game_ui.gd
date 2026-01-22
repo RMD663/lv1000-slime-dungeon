@@ -16,7 +16,6 @@ func _ready() -> void:
 	combo_label.hide()
 	enemies_left.hide()
 	timer_label.hide()
-	enemies_left.text = "ENEMIES LEFT\n" + str(Helper.get_enemy_spanwer().current_enemies)
 	game_over_ui.visible = false
 	Helper.entity_died.connect(_update_left)
 	Helper.fade_in.connect(_play_fade_in)
