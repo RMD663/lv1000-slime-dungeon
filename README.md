@@ -27,4 +27,4 @@ Colete os power-ups deixados pelos inimigos ou espalhados pelo mapa.
 Sobreviva o máximo de tempo possível enquanto aumenta seu nível.
 
 ## Estrutura do Projeto
-O desenvolvimento focou em boas práticas de organização de pastas e nomenclatura, facilitando a manutenção e a escalabilidade do código. O portfólio detalhado das implementações pode ser encontrado no meu site pessoal.
+O desenvolvimento focou em boas práticas de organização de pastas e nomenclatura, facilitando a manutenção e a escalabilidade do código. O portfólio detalhado das implementações pode ser encontrado [aqui](https://rmd663.github.io/portfolio/index.html).
